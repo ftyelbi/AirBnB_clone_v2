@@ -11,7 +11,7 @@ Base = declarative_base()
 
 
 class BaseModel:
-    """class will define all common attributes/methods
+    """This class defines all common attributes/methods
     for other classes
     """
     id = Column(String(60), unique=True, nullable=False, primary_key=True)
@@ -19,7 +19,7 @@ class BaseModel:
     updated_at = Column(DateTime, nullable=False, default=(datetime.utcnow()))
 
     def __init__(self, *args, **kwargs):
-        """the Instantiation of base model class
+        """Instantiation of base model class
         Args:
             args: it won't be used
             kwargs: arguments for constructor of BaseModel
@@ -58,7 +58,7 @@ class BaseModel:
         return self.__str__()
 
     def save(self):
-        """The updated_at attribute for the public instance is now set to current
+        """updates public instance attribute updated_at to current
         """
         self.updated_at = datetime.now()
         models.storage.new(self)
@@ -78,6 +78,6 @@ class BaseModel:
         return my_dict
 
     def delete(self):
-        """ deletes object
+        """ delete object
         """
         models.storage.delete(self)
