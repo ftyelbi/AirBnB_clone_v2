@@ -28,24 +28,19 @@ class DBStorage:
         if getenv('HBNB_ENV') == 'test':
             Base.metadata.drop_all(self.__engine)
 
-    # Update the all method in models/engine/db_storage.py
-
     def all(self, cls=None):
-    """
-    Queries all objects depending on the class name (argument cls).
-    """
-    objs = {}
-    if cls:
-        if cls == "User":
-            cls = eval(cls)
-        for obj in self.__session.query(cls).all():
-            objs[obj.__class__.__name__ + '.' + obj.id] = obj
-    else:
-        for cls in ["User", "State", "City", "Amenity", "Place", "Review"]:
-            for obj in self.__session.query(eval(cls)).all():
+        """
+        Queries all objects depending on the class name (argument cls).
+        """
+        objs = {}
+        if cls:
+            for obj in self.__session.query(cls).all():
                 objs[obj.__class__.__name__ + '.' + obj.id] = obj
-    return objs
-
+        else:
+            for cls in ["User", "State", "City", "Amenity", "Place", "Review"]:
+                for obj in self.__session.query(eval(cls)).all():
+                    objs[obj.__class__.__name__ + '.' + obj.id] = obj
+        return objs
 
     def new(self, obj):
         """
